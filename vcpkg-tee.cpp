@@ -45,7 +45,6 @@ int main()
             total = atoi(results[2].str().c_str());
             package = (wstringstream() << results[3].str().c_str()).str();
             update_progress(&original_title[0], instance, total, package);
-            Sleep(1000);
         }
     }
     SetConsoleTitle(&original_title[0]);
