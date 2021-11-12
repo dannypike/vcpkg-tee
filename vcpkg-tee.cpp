@@ -21,8 +21,9 @@ using namespace std;
 void update_progress(LPWSTR original_title, int instance, int total, const wstring &package)
 {
     wchar_t new_title[2048];
-    StringCbPrintfW(&new_title[0], sizeof(new_title) / sizeof(new_title[0]), L"[%i/%i %ws] - %ws"
-        , instance, total, package.c_str(), original_title);
+    StringCbPrintfW(&new_title[0], sizeof(new_title) / sizeof(new_title[0]), L"%i/%i %ws%ws%ws"
+        , instance, total, package.c_str(), (L'\0' == *original_title) ? L"": L" - "
+        , original_title);
     SetConsoleTitle(&new_title[0]);
 }
 
@@ -35,7 +36,7 @@ int main()
     wstring package;
     smatch results;
     int instance, total;
-    regex rx("^Starting package.*([0-9]+) */ *([0-9]+) *:? *(.*)$");
+    regex rx("^Starting package[^0-9]*([0-9]+) */ *([0-9]+) *:? *(.*)$");
 
     while (getline(cin, line)) {
         cout << line << endl;
